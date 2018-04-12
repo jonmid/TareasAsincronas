@@ -12,11 +12,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.jonmid.tareasasincronas.Models.Post;
+import com.example.jonmid.tareasasincronas.Parser.Json;
+import com.example.jonmid.tareasasincronas.URL.HttpManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     Button button;
     TextView textView;
+
+    List<Post> postList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +77,16 @@ public class MainActivity extends AppCompatActivity {
 
     // *************************************************************************************
 
-    public void processData(String s){
-        textView.setText("Numero: "+s);
-        textView.setTextSize(Integer.parseInt(s));
+    public void processData(){
+        //textView.setText("Numero: "+s);
+        //textView.setTextSize(Integer.parseInt(s));
+        //textView.append(s + "\n");
+
+        Toast.makeText(this, String.valueOf(postList.size()), Toast.LENGTH_SHORT).show();
+
+        for(Post str : postList) {
+            textView.append(str.toString() + "\n");
+        }
     }
 
     public class MyTask extends AsyncTask<String, String, String>{
@@ -71,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            for (int i = 1; i <= 50; i++){
+            /*for (int i = 1; i <= 50; i++){
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -79,18 +106,34 @@ public class MainActivity extends AppCompatActivity {
                 }
                 publishProgress(String.valueOf(i));
             }
-            return "fin";
+            return "fin";*/
+
+            String content = null;
+            try {
+                content = HttpManager.getDataJson(strings[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return content;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            processData(values[0]);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            try {
+                postList = Json.getData(s);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            processData();
+
             progressBar.setVisibility(View.GONE);
         }
     }
