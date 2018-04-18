@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Tarea para traer los datos de post
     public class MyTask extends AsyncTask<String, String, String>{
         @Override
         protected void onPreExecute() {
