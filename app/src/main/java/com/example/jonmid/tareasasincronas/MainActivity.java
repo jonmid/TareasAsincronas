@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     // *************************************************************************************
 
+    // Tarea para traer los datos de paises
     public class TaskCountry extends AsyncTask<String, String, String>{
         @Override
         protected void onPreExecute() {
