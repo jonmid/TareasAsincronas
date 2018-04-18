@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Atributos de clase
+    // Atributos de clase hola
     ProgressBar progressBar;
     Button button;
     TextView textView;
