@@ -6,18 +6,15 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.jonmid.tareasasincronas.Adapters.CountryAdapter;
 import com.example.jonmid.tareasasincronas.Models.Country;
 import com.example.jonmid.tareasasincronas.Models.Post;
 import com.example.jonmid.tareasasincronas.Parser.Json;
@@ -37,10 +34,13 @@ public class MainActivity extends AppCompatActivity {
     // Atributos de clase iniciales
     ProgressBar progressBar;
     Button button;
-    TextView textView;
+    //TextView textView;
+    RecyclerView recyclerView;
 
     List<Post> postList = new ArrayList<>();
     List<Country> countryList = new ArrayList<>();
+
+    CountryAdapter countryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.id_pb_data);
         button = (Button) findViewById(R.id.id_btn_loaddata);
-        textView = (TextView) findViewById(R.id.id_tv_data);
+        //textView = (TextView) findViewById(R.id.id_tv_data);
+
+        recyclerView = (RecyclerView) findViewById(R.id.id_rcv_data);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     // Metodo para validar la conexion a internet
@@ -95,9 +102,12 @@ public class MainActivity extends AppCompatActivity {
             textView.append(str.getTitle() + "\n");
         }*/
 
-        for (Country str : countryList){
-            textView.append(str.getName() + "\n");
-        }
+        /*for (Country str : countryList){
+            //textView.append(str.getName() + "\n");
+        }*/
+
+        countryAdapter = new CountryAdapter(countryList, getApplicationContext());
+        recyclerView.setAdapter(countryAdapter);
     }
 
     // Tarea para traer los datos de post

@@ -22,17 +22,11 @@
         android:text="Cargar datos"
         android:onClick="loadData"/>
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_rcv_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/id_tv_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
