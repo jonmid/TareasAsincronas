@@ -1,6 +1,7 @@
 package com.example.jonmid.tareasasincronas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -58,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
+
+    public void showPost(View view){
+        Intent intent = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
+
 
     // Metodo para validar la conexion a internet
     public Boolean isOnLine(){
